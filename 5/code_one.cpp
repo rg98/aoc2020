@@ -44,15 +44,13 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error(std::string("Can't open ") + input_path.string() +
                                  " for reading!");
 
-    // Read input file into occupied - last line always empty
+    // Read input file into occupied
     std::vector<std::string> in_str;
-    while (!in.eof()) {
-        std::string line;
-        std::getline(in, line);
+    std::string line;
+    while (std::getline(in, line)) {
         auto seat = decode_seat(line);
         occupied.push_back(seat);
     }
-    occupied.pop_back();
 
     // Return max element of occupied
     std::cout << "Highest Seat ID: " << *std::max_element(occupied.begin(), occupied.end())
