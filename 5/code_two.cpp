@@ -13,6 +13,14 @@
 #include <string>
 #include <vector>
 
+// decode seat decodes the bits of the resulting number by using the fact,
+// that the third bit has the inverse value of the resulting bit in the
+// seat id:
+// 'F' = 1000(1)10
+// 'B' = 1000(0)10
+// 'L' = 1001(1)00
+// 'R' = 1010(0)10
+
 int32_t decode_seat(const std::string& code) {
     int32_t seat =
         std::accumulate(code.cbegin(), code.cend(), 0, [&](int32_t a, const char b) -> int32_t {
@@ -37,7 +45,7 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error(std::string("Can't open ") + input_path.string() +
                                  " for reading!");
 
-    // Read input file into occupied
+    // Read input file into occupied - last line always empty
     std::vector<std::string> in_str;
     while (!in.eof()) {
         std::string line;
@@ -46,11 +54,15 @@ int main(int argc, char* argv[]) {
         occupied.push_back(seat);
     }
     occupied.pop_back();
+
+    // Sort seat ids and search first gap the result is between the resulting
+    // tuple
     std::sort(occupied.begin(), occupied.end());
     auto my_seat =
         std::mismatch(occupied.begin(), std::prev(occupied.end()), std::next(occupied.begin()),
                       [&](const int32_t& a, const int32_t& b) -> bool { return (a + 1) == b; });
-    std::cout << "My Seat ID: " << *std::get<0>(my_seat) + 1 << std::endl;
+    std::cout << "My Seat ID: " << (*std::get<0>(my_seat) + *std::get<1>(my_seat)) / 2
+              << std::endl;
 
     return 0;
 }
