@@ -11,11 +11,12 @@ with open('in.txt', 'r') as fd:
 # Search pair adding to 2020
 found = False
 for i in range(0, len(numbers)-1):
-    for j in range(i+1, len(numbers)):
-        if numbers[i] + numbers[j] == 2020:
-            found = True
-            print(f'result: {numbers[i]} * {numbers[j]} = {numbers[i] * numbers[j]}')
-            break
+    if numbers[i] < 2020:
+        for j in range(i+1, len(numbers)):
+            if numbers[i] + numbers[j] == 2020:
+                found = True
+                print(f'result: {numbers[i]} * {numbers[j]} = {numbers[i] * numbers[j]}')
+                break
 
 if not found:
     print('nothing found')
