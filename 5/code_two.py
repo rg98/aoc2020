@@ -16,7 +16,7 @@ occupied = sorted(occupied)
 last_seat = occupied[0]
 for seat in occupied[1:]:
     if seat > last_seat + 1:
-        print(f'highest ID: {last_seat+1}')
+        print(f'My Seat ID: {last_seat+1}')
         break
     last_seat = seat
 

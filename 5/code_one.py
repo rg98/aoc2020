@@ -5,8 +5,10 @@ occupied = []
 def decode(seat):
     if len(seat) != 10:
         raise RuntimeError('Seat always should have 10 bits')
-    seat = seat.replace('F', '0').replace('B','1').replace('R', '1').replace('L', '0')
-    return int(seat, base=2)
+    seat_id = 0
+    for c in seat:
+        seat_id = (~ord(c) & 4) >> 2 | (seat_id << 1)
+    return seat_id
 
 with open('in.txt') as fd:
     for seat in fd:
