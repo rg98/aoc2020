@@ -17,7 +17,7 @@
 // Check password
 //
 
-int count_questions(const std::string& group) {
+int count_questions(const std::string& group, const int size) {
     std::map<char, int> questions;
     for (auto c : group)
         if (std::islower(c)) {
@@ -28,7 +28,11 @@ int count_questions(const std::string& group) {
         } else {
             throw std::runtime_error("wrong format in count_question!");
         }
-    return questions.size();
+    auto n =
+        std::accumulate(questions.begin(), questions.end(), 0, [&](int a, auto& it) -> int {
+            return a + ((it.second == size) ? 1 : 0);
+        });
+    return n;
 }
 
 int main(int argc, char* argv[]) {
@@ -46,18 +50,19 @@ int main(int argc, char* argv[]) {
                                  " for reading!");
 
     // Read input file into maze
-    std::vector<std::string> groups = {""};
+    std::vector<std::pair<std::string, int>> groups = {std::make_pair("", 0)};
     std::string line;
     while (std::getline(in, line)) {
         if (line.size() > 0)
-            groups.back() += line;
+            groups.back() = std::make_pair(std::get<0>(groups.back()) + line,
+                                           std::get<1>(groups.back()) + 1);
         else
-            groups.push_back("");
+            groups.emplace_back(std::make_pair("", 0));
     }
 
     auto count{0};
     for (auto& group : groups) {
-        count += count_questions(group);
+        count += count_questions(std::get<0>(group), std::get<1>(group));
     }
 
     std::cout << "Sum of all groups: " << count << std::endl;
