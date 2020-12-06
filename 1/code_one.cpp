@@ -1,6 +1,6 @@
 //
 // Advent of Code 2020
-//       Day 5
+//       Day 1
 //
 // © Ralph Ganszky
 //

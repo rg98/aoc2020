@@ -1,6 +1,6 @@
 //
 // Advent of Code 2020
-//       Day 5
+//       Day 3
 //
 // © Ralph Ganszky
 //
@@ -9,7 +9,6 @@
 #include <fstream>
 #include <iostream>
 #include <numeric>
-#include <regex>
 #include <string>
 #include <vector>
 
