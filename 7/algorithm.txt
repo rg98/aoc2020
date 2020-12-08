@@ -2,15 +2,43 @@
                            Directed Graph
                            ==============
 
-                | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10| 11| 12| 13
-light red       | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
-bright white    |-1 | 0 | 0 |-1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
-muted yellow    | 0 |-1 |-1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0
-dark orange     | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
-shiny gold      | 0 | 0 | 0 | 0 |-1 |-1 | 0 | 1 | 2 | 0 | 0 | 0 | 0
-dark olive      | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-1 | 0 | 4 | 3 | 0 | 0
-vibrant plum    | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-2 | 0 | 0 | 6 | 5
-dotted black    | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-4 | 0 |-6 | 0
-faded blue      | 0 | 0 | 0 | 0 | 0 | 0 |-1 | 0 | 0 | 0 |-3 | 0 |-5
+Rules:
+------------
+light red bags contain 1 bright white bag, 2 muted yellow bags.
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+bright white bags contain 1 shiny gold bag.
+muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+faded blue bags contain no other bags.
+dotted black bags contain no other bags.
 
+The colors are here nodes and the rules define edges:
 
+                 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10| 11| 12| 13
+light red      1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+bright white   2 |-1 | 0 | 0 |-1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+muted yellow   3 | 0 |-1 |-1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0
+dark orange    4 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+shiny gold     5 | 0 | 0 | 0 | 0 |-1 |-1 | 0 | 1 | 2 | 0 | 0 | 0 | 0
+dark olive     6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-1 | 0 | 4 | 3 | 0 | 0
+vibrant plum   7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-2 | 0 | 0 | 6 | 5
+dotted black   8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-4 | 0 |-6 | 0
+faded blue     9 | 0 | 0 | 0 | 0 | 0 | 0 |-1 | 0 | 0 | 0 |-3 | 0 |-5
+
+The first problem gets solved by starting at the row "shiny gold" search for negative
+numbers. Find the matching positive numbers in the columns found and do the same for
+the found colors until no positive numbers could be found.
+
+Start in row 5. column 5 and 6 has negative numbers. The edges lead to bright white and
+muted yellow. Bright white add light red and dark orange. Muted yellow add also light
+red and dark orange, therefore four different bags contain at least one shiny gold bag.
+
+The second problem gets solved by starting at the row "shiny gold". Now we walk the other
+direction. We search positive numbers and follow the edges forward. Shiny gold bags 
+contain one dark olive bag, which contains four dotted black bags and three faded
+blue bags. These sum up to 1 + 1 * (4 + 3) = 8. And in addition it contains two vibrant
+plum bags which contain six dotted black bags each and five faded blue bags each. 
+These sum up to 2 + 2 * (5 + 6) = 24. Both sums sum up to 32 bags within a shiny gold
+bag.
