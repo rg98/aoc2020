@@ -17,15 +17,15 @@ dotted black bags contain no other bags.
 The colors are here nodes and the rules define edges:
 
                  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10| 11| 12| 13
-light red      1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
-bright white   2 |-1 | 0 | 0 |-1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
-muted yellow   3 | 0 |-1 |-1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0
-dark orange    4 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
-shiny gold     5 | 0 | 0 | 0 | 0 |-1 |-1 | 0 | 1 | 2 | 0 | 0 | 0 | 0
+light red      1 | 0 | 0 | 2 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+bright white   2 |-3 | 0 | 0 |-1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+muted yellow   3 | 0 |-4 |-2 | 0 | 0 | 2 | 9 | 0 | 0 | 0 | 0 | 0 | 0
+dark orange    4 | 3 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+shiny gold     5 | 0 | 0 | 0 | 0 |-1 |-2 | 0 | 1 | 2 | 0 | 0 | 0 | 0
 dark olive     6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-1 | 0 | 4 | 3 | 0 | 0
 vibrant plum   7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-2 | 0 | 0 | 6 | 5
 dotted black   8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |-4 | 0 |-6 | 0
-faded blue     9 | 0 | 0 | 0 | 0 | 0 | 0 |-1 | 0 | 0 | 0 |-3 | 0 |-5
+faded blue     9 | 0 | 0 | 0 | 0 | 0 | 0 |-9 | 0 | 0 | 0 |-3 | 0 |-5
 
 The first problem gets solved by starting at the row "shiny gold" search for negative
 numbers. Find the matching positive numbers in the columns found and do the same for
@@ -42,3 +42,18 @@ blue bags. These sum up to 1 + 1 * (4 + 3) = 8. And in addition it contains two 
 plum bags which contain six dotted black bags each and five faded blue bags each. 
 These sum up to 2 + 2 * (5 + 6) = 24. Both sums sum up to 32 bags within a shiny gold
 bag.
+
+In C++ the graph is stored as a map with the edges attached to the color
+========================================================================
+
+light red       ( -2> muted yellow, -1> bright white )
+dark orange     ( -3> bright white, -4> muted yellow )
+bright white    ( <1- light red, <3- dark orange, -1> shiny gold )
+muted yellow    ( <2- light red, <4- dark orange, -2> shiny gold, -9> faded blue )
+shiny gold      ( <1- bright white, <2- muted yellow, -1> dark olive, -2> vibrant plum )
+dark olive      ( <1- shiny gold, -3> faded blue, -4> dotted black )
+vibrant plum    ( <2- shiny gold, -5> faded blue, -6> dotted black )
+faded blue      ( <9- muted yellow, <3- dark olive, <5- vibrant plum )
+dotted black    ( <4- dark olive, <6- vibrant plum )
+
+Therefore the algorithm is slightly different. We need only one loop to get the bags.
