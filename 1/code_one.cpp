@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error(std::string("Can't open ") + input_path.string() +
                                  " for reading!");
 
-    // Read input file into occupied
+    // Read input file into numbers
     std::vector<std::string> in_str;
     std::string line;
     while (std::getline(in, line)) {

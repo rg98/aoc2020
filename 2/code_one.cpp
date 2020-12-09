@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error(std::string("Can't open ") + input_path.string() +
                                  " for reading!");
 
-    // Read input file into occupied
+    // Read password with rule and verify it immediately
     std::vector<std::string> in_str;
     std::string line;
     const std::regex sep(" |-");
