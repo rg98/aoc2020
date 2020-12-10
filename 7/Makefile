@@ -6,7 +6,7 @@
 
 CXX           = clang++
 
-CXXFLAGS      = -g -O0 -fno-omit-frame-pointer -fno-optimize-sibling-calls \
+CXXFLAGS      = -g -Os -fno-omit-frame-pointer -fno-optimize-sibling-calls \
                 -std=c++17 -Wall 
 
 #		-fsanitize=address -fsanitize-address-use-after-scope \
