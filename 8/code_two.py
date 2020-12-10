@@ -6,21 +6,15 @@ def check(program):
     acc = 0
     check = [False] * len(program)
     while pc < len(program):
+        if check[pc]:
+            return False, acc
+        check[pc] = True
         if program[pc][0] == 'n':
-            if check[pc]:
-                return False, acc
-            check[pc] = True
             pc += 1
         elif program[pc][0] == 'a':
-            if check[pc]:
-                return False, acc
-            check[pc] = True
             acc += program[pc][1]
             pc += 1
         elif program[pc][0] == 'j':
-            if check[pc]:
-                return False, acc
-            check[pc] = True
             if pc + program[pc][1] > len(program) or pc + program[pc][1] < 0:
                 return False, acc
             pc += program[pc][1]
@@ -54,4 +48,5 @@ for i in range(len(program)):
     succ, acc = check(test_program)
     if succ:
         print(f"accumulator: {acc}")
+        break
 

@@ -5,21 +5,15 @@ def check(program):
     acc = 0
     check = [False] * len(program)
     while True:
+        if check[pc]:
+            return acc
+        check[pc] = True
         if program[pc][0] == 'n':
-            if check[pc]:
-                return acc
-            check[pc] = True
             pc += 1
         elif program[pc][0] == 'a':
-            if check[pc]:
-                return acc
-            check[pc] = True
             acc += program[pc][1]
             pc += 1
         elif program[pc][0] == 'j':
-            if check[pc]:
-                return acc
-            check[pc] = True
             pc += program[pc][1]
         else:
             raise RuntimeError("Unknown opcode")
