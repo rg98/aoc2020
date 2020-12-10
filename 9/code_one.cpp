@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error(std::string("Can't open ") + input_path.string() +
                                  " for reading!");
 
-    // Read program
+    // Read code
     std::vector<int64_t> numbers;
     std::string line;
     while (std::getline(in, line)) {

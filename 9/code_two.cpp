@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
         throw std::runtime_error(std::string("Can't open ") + input_path.string() +
                                  " for reading!");
 
-    // Read program
+    // Read code
     std::vector<int64_t> numbers;
     std::string line;
     int64_t sum_of_nums{144381670};
