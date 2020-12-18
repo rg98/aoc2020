@@ -23,13 +23,8 @@ int64_t yylex();
 %nterm <int64_t> line;
 %nterm <int64_t> lines;
 %token <int64_t> NUM;
-%token           PLUS;
-%token           TIMES;
-%token           OPEN;
-%token           CLOSE;
-%token           NEW_LINE;
 
-%left PLUS TIMES
+%left '+' '*'
 
 %code {
     namespace yy {
@@ -43,18 +38,9 @@ int64_t yylex();
                 } else if (std::isspace(c)) {
                     std::cin.get(c);
                     if (c == '\n')
-                        return parser::make_NEW_LINE();
+                        return c;
                 } else {
                     std::cin.get(c);
-                    if (c == '+')
-                        return parser::make_PLUS();
-                    else if (c == '*')
-                        return parser::make_TIMES();
-                    else if (c == '(')
-                        return parser::make_OPEN();
-                    else if (c == ')')
-                        return parser::make_CLOSE();
-                    else
                         return c;
                 }
             }
@@ -75,15 +61,15 @@ lines:
 ;
 
 line:
-    exp NEW_LINE        { $$ = $1; }
+    exp '\n'            { $$ = $1; }
 |   exp YYEOF           { $$ = $1; }
 ;
 
 exp:
     NUM                 { $$ = $1; }
-|   exp PLUS exp        { $$ = $1 + $3; }
-|   exp TIMES exp       { $$ = $1 * $3; }
-|   OPEN exp CLOSE      { $$ = $2; }
+|   exp '+' exp         { $$ = $1 + $3; }
+|   exp '*' exp         { $$ = $1 * $3; }
+|   '(' exp ')'         { $$ = $2; }
 ;
 
 %%
